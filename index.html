@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IApdf - Procesador de PDFs con IA</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-file-pdf"></i> IApdf</h1>
+                <p>Procesador de PDFs con Inteligencia Artificial</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Configuración -->
+            <section class="config-section">
+                <div class="config-card">
+                    <h2><i class="fas fa-cog"></i> Configuración</h2>
+                    <div class="config-form">
+                        <div class="form-group">
+                            <label for="apiKey">
+                                <i class="fas fa-key"></i> API Key de OpenRouter:
+                            </label>
+                            <input type="password" id="apiKey" placeholder="Ingresa tu API Key de OpenRouter">
+                            <button type="button" id="toggleApiKey" class="btn-toggle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <label for="systemPrompt">
+                                <i class="fas fa-robot"></i> Prompt del Sistema:
+                            </label>
+                            <textarea id="systemPrompt" rows="3" placeholder="Instrucciones para el modelo de IA...">Eres un asistente experto en análisis de documentos. Analiza cada página del PDF y proporciona información detallada sobre su contenido, manteniendo el contexto de las páginas anteriores.</textarea>
+                        </div>
+                        <button id="saveConfig" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Guardar Configuración
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Selección de PDF -->
+            <section class="pdf-section">
+                <div class="pdf-card">
+                    <h2><i class="fas fa-upload"></i> Seleccionar PDF</h2>
+                    <div class="upload-area">
+                        <button id="selectPdf" class="btn btn-large">
+                            <i class="fas fa-file-pdf"></i>
+                            Seleccionar archivo PDF
+                        </button>
+                        <div id="selectedFile" class="selected-file"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Procesamiento -->
+            <section class="processing-section">
+                <div class="processing-card">
+                    <h2><i class="fas fa-brain"></i> Procesamiento con IA</h2>
+                    <div class="processing-form">
+                        <div class="form-group">
+                            <label for="userPrompt">
+                                <i class="fas fa-comment"></i> Tu pregunta o instrucción:
+                            </label>
+                            <textarea id="userPrompt" rows="3" placeholder="¿Qué quieres saber sobre este PDF?">Analiza esta página del documento y extrae la información más importante. Si hay texto, tablas o gráficos, descríbelos detalladamente.</textarea>
+                        </div>
+                        <button id="processPages" class="btn btn-success" disabled>
+                            <i class="fas fa-play"></i>
+                            Procesar todas las páginas
+                        </button>
+                    </div>
+                    
+                    <div id="progressContainer" class="progress-container" style="display: none;">
+                        <div class="progress-info">
+                            <span id="progressText">Preparando...</span>
+                            <span id="progressPercent">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div id="progressFill" class="progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Resultados -->
+            <section class="results-section">
+                <div class="results-card">
+                    <h2><i class="fas fa-comments"></i> Conversación</h2>
+                    <div id="conversationContainer" class="conversation-container">
+                        <div class="empty-state">
+                            <i class="fas fa-comment-slash"></i>
+                            <p>No hay conversación aún. Selecciona un PDF y comienza el procesamiento.</p>
+                        </div>
+                    </div>
+                    <div class="conversation-controls">
+                        <button id="clearConversation" class="btn btn-secondary" disabled>
+                            <i class="fas fa-trash"></i>
+                            Limpiar conversación
+                        </button>
+                        <button id="exportConversation" class="btn btn-secondary" disabled>
+                            <i class="fas fa-download"></i>
+                            Exportar conversación
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2025 IApdf - Powered by OpenRouter & Gemini 2.5 Pro</p>
+        </footer>
+    </div>
+
+    <script src="renderer.js"></script>
+</body>
+</html>
