@@ -79,6 +79,25 @@ npm run build
 
 Para usar esta aplicación necesitas una API Key de OpenRouter:
 
+1. **Obtener API Key**:
+   - Visita [OpenRouter Keys](https://openrouter.ai/keys)
+   - Crea una cuenta si no tienes una
+   - Genera una nueva API key
+   - La clave debe comenzar con `sk-or-`
+
+2. **Probar la API Key**:
+   ```bash
+   # Usar el script de prueba incluido
+   node test-api.js sk-or-v1-tu-api-key-aqui
+   ```
+
+3. **Configurar en la aplicación**:
+   - Pega la API key en el campo correspondiente
+   - La aplicación validará automáticamente la clave
+   - Guarda la configuración
+
+> **Nota**: Mantén tu API key segura y nunca la compartas públicamente.
+
 1. Visita [openrouter.ai](https://openrouter.ai)
 2. Crea una cuenta o inicia sesión
 3. Genera una API Key

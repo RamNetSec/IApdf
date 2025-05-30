@@ -85,10 +85,16 @@ async function saveConfiguration() {
 
     // Validar API Key antes de guardar
     if (config.apiKey) {
+        // Verificar formato de API key
+        if (!config.apiKey.startsWith('sk-or-')) {
+            showNotification('API Key debe comenzar con "sk-or-". Verifica tu clave de OpenRouter.', 'error');
+            return;
+        }
+        
         showNotification('Validando API Key...', 'info');
         const isValid = await window.electronAPI.validateApiKey(config.apiKey);
         if (!isValid) {
-            showNotification('API Key inválida. Por favor verifica tu clave.', 'error');
+            showNotification('API Key inválida. Verifica tu clave en https://openrouter.ai/keys', 'error');
             return;
         }
     }
