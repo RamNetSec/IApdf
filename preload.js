@@ -16,5 +16,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
   
   // Configuración
   saveConfig: (config) => ipcRenderer.invoke('save-config', config),
-  loadConfig: () => ipcRenderer.invoke('load-config')
+  loadConfig: () => ipcRenderer.invoke('load-config'),
+
+  // Verificación de conexión y API Key
+  checkInternetConnection: () => ipcRenderer.invoke('check-internet-connection'),
+  validateApiKey: (apiKey) => ipcRenderer.invoke('validate-api-key', apiKey),
 });

@@ -146,6 +146,9 @@ user-data/
 app-data/
 config.json
 
+# Configuration example file should be tracked
+!config.example.json
+
 # PDF processing temp files
 temp-images/
 processed-pdfs/

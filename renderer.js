@@ -83,6 +83,16 @@ async function saveConfiguration() {
         systemPrompt: systemPromptTextarea.value.trim()
     };
 
+    // Validar API Key antes de guardar
+    if (config.apiKey) {
+        showNotification('Validando API Key...', 'info');
+        const isValid = await window.electronAPI.validateApiKey(config.apiKey);
+        if (!isValid) {
+            showNotification('API Key inválida. Por favor verifica tu clave.', 'error');
+            return;
+        }
+    }
+
     try {
         const success = await window.electronAPI.saveConfig(config);
         if (success) {
@@ -127,10 +137,26 @@ function validateForm() {
     processPagesBtn.disabled = !(hasApiKey && hasPdf && hasPrompt);
 }
 
+// Verificar conexión a internet
+async function checkConnection() {
+    const isConnected = await window.electronAPI.checkInternetConnection();
+    if (!isConnected) {
+        showNotification('Sin conexión a internet. Verifica tu conexión.', 'warning');
+        return false;
+    }
+    return true;
+}
+
 // Procesar todas las páginas
 async function processAllPages() {
     if (!selectedPdfPath || !apiKeyInput.value.trim() || !userPromptTextarea.value.trim()) {
         showNotification('Por favor, complete todos los campos requeridos', 'error');
+        return;
+    }
+
+    // Verificar conexión a internet
+    const isConnected = await checkConnection();
+    if (!isConnected) {
         return;
     }
 

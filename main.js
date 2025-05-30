@@ -15,10 +15,17 @@ function createWindow() {
       contextIsolation: true,
       preload: path.join(__dirname, 'preload.js')
     },
-    icon: path.join(__dirname, 'assets', 'icon.png')
+    icon: path.join(__dirname, 'assets', 'icon.svg'),
+    title: 'IApdf - Procesador de PDFs con IA',
+    show: false // No mostrar hasta que esté listo
   });
 
   mainWindow.loadFile('index.html');
+
+  // Mostrar ventana cuando esté lista
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show();
+  });
 
   // Abrir DevTools en modo desarrollo
   if (process.argv.includes('--dev')) {
@@ -177,5 +184,45 @@ ipcMain.handle('load-config', async () => {
   } catch (error) {
     console.error('Error loading config:', error);
     return {};
+  }
+});
+
+// Manejo de errores no capturados
+process.on('uncaughtException', (error) => {
+  console.error('Uncaught Exception:', error);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
+// Verificar conexión a internet
+ipcMain.handle('check-internet-connection', async () => {
+  try {
+    const response = await axios.get('https://openrouter.ai/api/v1/models', {
+      timeout: 5000,
+      headers: {
+        'User-Agent': 'IApdf/1.0.0'
+      }
+    });
+    return response.status === 200;
+  } catch (error) {
+    return false;
+  }
+});
+
+// Validar API Key
+ipcMain.handle('validate-api-key', async (event, apiKey) => {
+  try {
+    const response = await axios.get('https://openrouter.ai/api/v1/models', {
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json'
+      },
+      timeout: 10000
+    });
+    return response.status === 200;
+  } catch (error) {
+    return false;
   }
 });
